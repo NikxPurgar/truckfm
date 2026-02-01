@@ -1,0 +1,152 @@
+/* ===== BASE ===== */
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#2a2a2a;
+    color:#fff;
+}
+
+/* ===== HEADER ===== */
+#Head{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100px;
+  background:#000;
+  gap:20px;
+  position:relative;
+  z-index:2;
+}
+
+.button-web{
+  color:#fff;
+  text-decoration:none;
+  padding:20px;
+  transition:0.3s;
+  cursor:pointer;
+}
+
+.button-web:hover{
+  background:#fff;
+  color:#000;
+}
+
+/* ===== PLAYER ===== */
+.player{
+  width:280px;
+  padding:30px;
+  margin:60px auto;
+  text-align:center;
+  position:relative;
+  border-radius:20px;
+  background:#000;
+  z-index:2;
+  overflow:hidden;
+}
+
+/* 🌈 ROTATING BORDER */
+.player::before{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border-radius:26px;
+  background:conic-gradient(
+    #ff0066,
+    #00e5ff,
+    #7cff00,
+    #ffd500,
+    #ff0066
+  );
+  z-index:-2;
+  animation: rotateBorder 4s linear infinite;
+  opacity:0;
+}
+
+.player.playing::before{
+  opacity:1;
+}
+
+/* inner mask */
+.player::after{
+  content:"";
+  position:absolute;
+  inset:4px;
+  border-radius:16px;
+  background:#000;
+  z-index:-1;
+}
+
+/* ===== PLAY BUTTON ===== */
+#play{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  border:none;
+  background:#fff;
+  color:#000;
+  font-size:32px;
+  cursor:pointer;
+  transition:transform 0.2s;
+}
+
+#play:hover{
+  transform:scale(1.1);
+}
+
+/* ===== VOLUME ===== */
+#volume{
+  width:100%;
+  margin-top:25px;
+}
+
+/* 💥 BEAT SCALE + SHADOW */
+.player.playing{
+  animation: beat 0.9s infinite;
+}
+
+@keyframes beat{
+  0%{
+    transform:scale(1);
+    box-shadow:
+      0 0 15px rgba(255,0,102,0.4),
+      0 0 40px rgba(0,229,255,0.4);
+  }
+  50%{
+    transform:scale(1.08);
+    box-shadow:
+      0 0 35px rgba(124,255,0,0.6),
+      0 0 80px rgba(255,213,0,0.5),
+      0 0 120px rgba(0,229,255,0.4);
+  }
+  100%{
+    transform:scale(1);
+    box-shadow:
+      0 0 15px rgba(255,0,102,0.4),
+      0 0 40px rgba(0,229,255,0.4);
+  }
+}
+
+/* 🔄 BORDER ROTATION */
+@keyframes rotateBorder{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+
+/* 🌌 AMBIENT BACKGROUND */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 30%, #00e5ff33, transparent 40%),
+    radial-gradient(circle at 80% 70%, #ff006633, transparent 40%),
+    radial-gradient(circle at 50% 90%, #7cff0033, transparent 40%);
+  animation: ambient 12s infinite alternate;
+  z-index:1;
+  pointer-events:none;
+}
+
+@keyframes ambient{
+  from{filter:blur(40px);}
+  to{filter:blur(70px);}
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Truck Beat FM</title>
+        <link rel="icon" type="image/png" href="photos/logo.png">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="requests.css">
+    </head>
+    <body>
+        <header id="Head">
+            <a class="button-web"href="index.html">HOME</a>
+            <a class="button-web" href="schedule.html">SCHEDULE</a>
+            <a class="button-web">REQUESTS</a>
+            <a class="button-web" href="contact.html">CONTACT</a>
+        </header>
+        <main id="Main" class="forma">
+            <form id="requestForm">
+                <h1>Song Requests</h1>
+                <hr width="100%" style="box-sizing:border-box;"><br>
+                <div id="input_req">
+                    <div>
+                        <div>
+                            <input type="text"placeholder="First name" required class="vnos1">
+                            <input type="text" placeholder="Last name" required class="vnos1">
+                        </div>
+                    </div>
+                    <input type="text" placeholder="Shout out" required class="vnos1">
+                    <textarea placeholder="Song name" required class="vnos2"></textarea>
+                    <button type="submit" id="submit">Submit</button>
+                </div>
+            </form>
+        </main>
+        <footer id="Foot"></footer>
+        <script>
+            const webhook = "https://discord.com/api/webhooks/1467451181658800342/9ToI0B9DtP2ZXuMEqOF9I0QlLiaEeiIusOQjuRSJCCS9wdVNmjQpuy9bzLxV2AB493ZB";
+
+            document.getElementById("requestForm").onsubmit = e => {
+            e.preventDefault();
+
+            const [first, last, shout, song] =
+                e.target.querySelectorAll("input, textarea");
+
+            fetch(webhook,{
+                method:"POST",
+                headers:{ "Content-Type":"application/json" },
+                body: JSON.stringify({
+                embeds: [{
+                    title: "🎵 New Song Request",
+                    color: 16711854, // roza
+                    fields: [
+                    {
+                        name: "👤 Trucker",
+                        value: `${first.value} ${last.value}`,
+                        inline: true
+                    },
+                    {
+                        name: "🎶 Song",
+                        value: song.value,
+                        inline: true
+                    },
+                    {
+                        name: "📣 Shout Out",
+                        value: shout.value || "—"
+                    }
+                    ],
+                    footer: {
+                    text: "Truck Beat FM • Song Requests"
+                    },
+                    timestamp: new Date()
+                }]
+                })
+            });
+
+            e.target.reset();
+            };
+        </script>
+    </body>
+</html>
